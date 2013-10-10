@@ -34,7 +34,7 @@ module Irwi::Extensions::Models::WikiPage
     base.send :extend, Irwi::Extensions::Models::WikiPage::ClassMethods
     base.send :include, Irwi::Extensions::Models::WikiPage::InstanceMethods
 
-    base.attr_protected :id
+    base.attr_protected :id if Rails.version < '4.0.0'
 
     base.send :attr_accessor, :comment, :previous_version_number
 
