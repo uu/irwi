@@ -41,7 +41,11 @@ module Irwi::Extensions::Models::WikiPage
     base.belongs_to :creator, :class_name => Irwi.config.user_class_name
     base.belongs_to :updator, :class_name => Irwi.config.user_class_name
 
-    base.has_many :versions, :class_name => Irwi.config.page_version_class_name, :foreign_key => Irwi.config.page_version_foreign_key, :order => 'id DESC'
+    if Rails.version < '4.0.0'
+      base.has_many :versions, :class_name => Irwi.config.page_version_class_name, :foreign_key => Irwi.config.page_version_foreign_key, :order => 'id DESC'
+    else
+      base.has_many :versions, lambda { order('id DESC') }, :class_name => Irwi.config.page_version_class_name, :foreign_key => Irwi.config.page_version_foreign_key
+    end
 
     if Irwi::config.page_attachment_class_name
       base.has_many :attachments, :class_name => Irwi.config.page_attachment_class_name, :foreign_key => Irwi.config.page_version_foreign_key
