@@ -37,7 +37,7 @@ module Irwi::Extensions::Models::WikiPageVersion
       first = first.to_i
       last = last.to_i
       first, last = last, first if last < first # Reordering if neeeded
-      where('number >= ? AND number <= ?', first, last)
+      base.where('number >= ? AND number <= ?', first, last)
     }
   end
 
